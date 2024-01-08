@@ -1,0 +1,31 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    background: lightblue;
+}
+
+#game-container {
+    height: 1050px;
+    width: 1000px;
+    background: pink;
+    border: 1px solid brown;
+    margin: auto;
+    position: relative;
+}
+
+#end-zone {
+    height: 158px;
+    width: 100%;
+    background: brown;
+    position: absolute;
+    bottom: 0;
+}
+
+#cup {
+    background: grey;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 158px;
+    left: 450px;
+}
