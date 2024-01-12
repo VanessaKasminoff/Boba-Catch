@@ -3,7 +3,10 @@
 {"widthValue" : 150,
 "heightValue" : 300},
     "game": {
-        "cupSizePercent": 5,
-        "bobaSizePercent": 4
+        "cupSizePercentOfWidth": 10,
+        "cupHeightPercentOfHeight": 7.5,
+        "bobaSizePercentOfWidth": 3,
+        "tableHeightPercentOfHeight": 15,
+        "cupHeightByPercentOfHeight": 14
     }
 }
