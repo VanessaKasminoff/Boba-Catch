@@ -23,9 +23,10 @@ function createTable() {
     let table = document.createElement('div')
     table.id = "table"
     table.style = `
+    background-image: url("/assets/img/table.png");
+    background-size: ${100}% ${100}%;
     width: 100%;
     height: ${settings.game.tableHeightPercentOfHeight}%;
-    background: brown;
     position: absolute;
     bottom: ${0}px
     `
@@ -37,13 +38,13 @@ function createCup() {
     let cup = document.createElement("div")
     cup.id = "cup"
     cup.style = `
+    background-image: url("/assets/img/cup.png");
+    background-size: ${100}%;
     width: ${cupWidth}%;
     height: ${settings.game.cupHeightPercentOfHeight}%;
-    background: darkblue;
     position: absolute;
     bottom: ${settings.game.cupHeightByPercentOfHeight}%
     `
-
     return cup
 }
 
@@ -61,8 +62,8 @@ function attachCupMouseMovement(cup, gameContainer) {
         //console.log(halfCupWidth)
 
         cup.style.left = (mouseX - halfCupWidth)+ 'px';
-        cup.leftBound = mouseX - halfCupWidth - halfBobaWidth
-        cup.rightBound = mouseX + halfCupWidth - halfBobaWidth
+        cup.leftBound = (mouseX - halfCupWidth - halfBobaWidth)/dynamicGameArea.width *100
+        cup.rightBound = (mouseX + halfCupWidth - halfBobaWidth)/dynamicGameArea.width *100
 
         //sets static position of cup to stop it from moving past the right side of the container.
         if (mouseX >= dynamicGameArea.width * 0.9 + halfCupWidth) {
@@ -88,14 +89,16 @@ export function loadGame(gameContainer) {
 
 // GENERATE FALLING BOBA
     function createBoba() {
-        let bobaSizePercent = settings.game.bobaSizePercentOfWidth
+        let bobaSizePercent = settings.game.bobaSizePercentOfWidth 
         let bobaSize = (bobaSizePercent * .01 * dynamicGameArea.width) // for readability
-        let bobaHeight = dynamicGameArea.height - bobaSize;
-        let bobaX = Math.random() * (dynamicGameArea.width - bobaSize);
+        let bobaHeight = 100 - settings.game.bobaSizePercentOfWidth/2//dynamicGameArea.height - bobaSize;
+        let bobaX = Math.random() * (100- bobaSizePercent)
         const boba = document.createElement('div');
         boba.style = `
         width: ${bobaSizePercent}%;
         height: ${bobaSizePercent / 2}%;
+        left: ${bobaX}%;
+        bottom: ${bobaHeight}%; 
         border-radius: 50%;
         background: black;
         position: absolute;
@@ -104,15 +107,14 @@ export function loadGame(gameContainer) {
 
         let uncaught = true
         function fallingBoba() {
-            bobaHeight -= 1;
-            boba.style.bottom = bobaHeight + 'px';
-            boba.style.left = bobaX + 'px'; 
+            bobaHeight -= .1;
+            boba.style.bottom = bobaHeight + '%';
             
             //catching
 
-            let cupRimHeight = ((settings.game.cupHeightByPercentOfHeight + settings.game.cupHeightPercentOfHeight -settings.game.bobaSizePercentOfWidth/4) * .01 * dynamicGameArea.height)
+            let cupRimHeight = settings.game.cupHeightByPercentOfHeight + settings.game.cupHeightPercentOfHeight -settings.game.bobaSizePercentOfWidth/4 //((settings.game.cupHeightByPercentOfHeight + settings.game.cupHeightPercentOfHeight -settings.game.bobaSizePercentOfWidth/4) * .01 * dynamicGameArea.height)
             let halfCupHeight = cupRimHeight - (settings.game.cupHeightPercentOfHeight * dynamicGameArea.width  *.01 )
-            let tableHeight = ((settings.game.tableHeightPercentOfHeight - settings.game.bobaSizePercentOfWidth) * dynamicGameArea.height * .01)
+            let tableHeight = settings.game.tableHeightPercentOfHeight - settings.game.bobaSizePercentOfWidth//((settings.game.tableHeightPercentOfHeight - settings.game.bobaSizePercentOfWidth) * dynamicGameArea.height * .01)
             //console.log(cupRimHeight)
             //console.log(halfCupHeight)
             if(uncaught && bobaHeight > halfCupHeight && bobaHeight < cupRimHeight) {
