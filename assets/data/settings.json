@@ -7,6 +7,8 @@
         "cupHeightPercentOfHeight": 10,
         "bobaSizePercentOfWidth": 3,
         "tableHeightPercentOfHeight": 15,
-        "cupHeightByPercentOfHeight": 14
+        "cupHeightByPercentOfHeight": 14,
+        "splashSizeWidthByPercentOfWidth":9,
+        "splashSizeHeightByPercentOfHeight":3
     }
 }

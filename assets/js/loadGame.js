@@ -45,6 +45,7 @@ function createCup() {
     position: absolute;
     bottom: ${settings.game.cupHeightByPercentOfHeight}%
     `
+    cup.liquid = "black"
     return cup
 }
 
@@ -122,6 +123,22 @@ export function loadGame(gameContainer) {
                     uncaught = false
                     console.log("caught")
                     boba.remove()
+                    if (cup.liquid == "black"){
+                        let splash =document.createElement('div')
+                        splash.style = `
+                        background-image: url("/assets/img/multisplashblack.png");
+                        background-size: ${100}% ${100}%;
+                        width: ${settings.game.splashSizeWidthByPercentOfWidth}%;
+                        height: ${settings.game.splashSizeHeightByPercentOfHeight}%;
+                        position: absolute;
+                        bottom: ${cupRimHeight}%;
+                        left: ${bobaX - settings.game.splashSizeWidthByPercentOfWidth/4}%
+                        `
+                        gameContainer.append(splash)
+                        setTimeout(() => {
+                            splash.remove()
+                        }, 300);
+                    }
                     }
             }
             //removal
