@@ -1,6 +1,23 @@
-// 0 - 900 px side to side
+import settings from '../data/settings.json' assert { type: 'json' };
+import levels from '../data/levels.json' assert { type: 'json' };
+import { checkMinimumWindowSize } from "./checkWindowSize.js";
+import { loadGame } from "./loadGame.js";
+
+
+let heightValue = settings.windowSize.heightValue
+let widthValue = settings.windowSize.widthValue
+
+window.onresize = checkMinimumWindowSize
+checkMinimumWindowSize()
+
 
 const gameContainer = document.getElementById('game-container');
+loadGame(gameContainer)
+
+
+//loadLevel(levels.level1)
+// 0 - 900 px side to side
+
 const cup = document.getElementById('cup');
 
 //CUP MOVEMENT
@@ -35,7 +52,7 @@ function createBoba() {
         boba.style.bottom = bobaStart + 'px';
         boba.style.left = bobaX + 'px';
         if(bobaStart < 157) {
-            boba.style.display = 'none';
+            boba.remove();
         }
     }
     setInterval(fallingBoba, 30);

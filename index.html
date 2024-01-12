@@ -8,10 +8,13 @@
 </head>
 <body>
     <h1>Boba Catch</h1>
+    <div id="windowSizeWarning">loading...</div>
     <div id="game-container">
         <div id="end-zone"></div>
         <div id="cup"></div>
     </div>
-    <script src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/checkWindowSize.js" defer></script>
+    <script type="module" src="assets/js/loadGame.js" defer></script>
+    <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
