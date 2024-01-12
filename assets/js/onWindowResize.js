@@ -28,3 +28,5 @@ export function onWindowResize(){
     // Below resizes the game area with a function from loadGame.js
     resizeGameArea(document.getElementById("game-container"))
 }
+
+//mohammad's window size function 

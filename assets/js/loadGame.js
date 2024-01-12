@@ -1,6 +1,7 @@
 import settings from '../data/settings.json' assert { type: 'json' };
 let cupWidth = settings.game.cupSizePercentOfWidth
 let dynamicGameArea // if this value was returned in resizeGameArea, then it would only be returned for the instance it was invoked. This is problematic because we need this value to be changed on each resize.
+let game = {score:0, time:0, bobaCaught:0}
 
 export function resizeGameArea(container) {
     let solutionWidth
@@ -49,6 +50,34 @@ function createCup() {
     return cup
 }
 
+function createTracker(tracker) {
+    let trackerElement = document.createElement("div")
+    trackerElement.id = `${tracker}Div`
+    trackerElement.style = `
+    text-align:center;
+    `
+    trackerElement.classList.add("comicSans30bold")
+    trackerElement.innerHTML = `${tracker}<br>0`
+    return trackerElement
+}
+
+
+
+function createGameHeader() {
+    let gameHeader = document.createElement("div")
+    gameHeader.id ="gameHeaderDiv"
+    gameHeader.style = `
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: ${settings.game.gameHeaderHeightPercent}%;
+    display: flex;
+    justify-content: space-between;
+    `
+    return gameHeader
+}
+
+
 //CUP MOVEMENT
 function attachCupMouseMovement(cup, gameContainer) {
     gameContainer.addEventListener('mousemove', function(e) {
@@ -80,6 +109,10 @@ function attachCupMouseMovement(cup, gameContainer) {
 export function loadGame(gameContainer) {
     resizeGameArea(gameContainer)
     gameContainer.append(createTable())
+    let gameHeader = createGameHeader()
+    gameContainer.append(gameHeader)
+    gameHeader.append(createTracker("score"), createTracker("time"), createTracker("boba"))
+
 
     /* you COUUULD do 
     gameContainer.append(attachCupMouseMovement(createCup(), gameContainer))
@@ -123,6 +156,8 @@ export function loadGame(gameContainer) {
                     uncaught = false
                     console.log("caught")
                     boba.remove()
+
+                    let multiplier = 1
                     if (cup.liquid == "black"){
                         let splash =document.createElement('div')
                         splash.style = `
@@ -138,8 +173,16 @@ export function loadGame(gameContainer) {
                         setTimeout(() => {
                             splash.remove()
                         }, 300);
+                        multiplier = 1.2
+                    } else if (cup.liquid == false) {
+                        multiplier = 1
                     }
-                    }
+
+                    game.score += 10 * multiplier
+                    game.bobaCaught += 1
+                    document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
+                    document.getElementById("bobaDiv").innerHTML = `boba<br>${game.bobaCaught}`
+                }
             }
             //removal
             if(uncaught && bobaHeight < tableHeight) {
@@ -147,6 +190,11 @@ export function loadGame(gameContainer) {
                 
                 uncaught = false
                 console.log("YOU SUCCCCK")
+
+                
+                game.score -= 5
+                document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
+                
             }
 
         //console.log("this is the falling boba function")

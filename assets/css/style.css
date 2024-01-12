@@ -20,14 +20,12 @@ body {
     position: fixed;
     
 }
-#end-zone {
-    height: 158px;
-    width: 100%;
-    background: brown;
-    position: absolute;
-    bottom: 0;
-}
 
+.comicSans30bold{
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 30px;
+    font-weight: bold;
+}
 
 
 #window-size-warning{

@@ -9,6 +9,7 @@
         "tableHeightPercentOfHeight": 15,
         "cupHeightByPercentOfHeight": 14,
         "splashSizeWidthByPercentOfWidth":9,
-        "splashSizeHeightByPercentOfHeight":3
+        "splashSizeHeightByPercentOfHeight":3,
+        "gameHeaderHeightPercent":7
     }
 }
