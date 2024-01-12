@@ -32,46 +32,56 @@ function createCup() {
     return cup
 }
 
+//CUP MOVEMENT
+function attachCupMouseMovement(cup, gameContainer) {
+    gameContainer.addEventListener('mousemove', function(e) {
+        //gets the position of the container relative to the viewport.
+        const gameContainerPos = gameContainer.getBoundingClientRect();
+        //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
+        const mouseX = e.clientX - gameContainerPos.left;
+        //updates the cup's position.
+        let halfCupWidth = cupWidth * 0.01 * gameArea.width
+        cup.style.left = (mouseX - halfCupWidth)+ 'px';
+
+        //sets static position of cup to stop it from moving past the right side of the container.
+        if (mouseX >= gameArea.width * 0.9 + halfCupWidth) {
+            cup.style.left = (gameArea.width * 0.9)+ 'px'
+        }
+        if (mouseX <= halfCupWidth){
+            cup.style.left = 0 + "px"
+        }
+    });
+}
+
+
 export function loadGame(gameContainer) {
     resizeGameArea(gameContainer)
     let cup = createCup()
     gameContainer.append(cup)
+    attachCupMouseMovement(cup, gameContainer)
 
-//loadLevel(levels.level1)
-// 0 - 900 px side to side
-
-//CUP MOVEMENT
-
-// returns object with css properties of cup and then specifcally the value of the 'left' property.
-const cupLeft = window.getComputedStyle(cup).getPropertyValue('left');
-
-gameContainer.addEventListener('mousemove', function(e) {
-    //gets the position of the container relative to the viewport.
-    const gameContainerPos = gameContainer.getBoundingClientRect();
-    
-    //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
-    const mouseX = e.clientX - gameContainerPos.left;
-    //updates the cup's position.
-    cup.style.left = mouseX + 'px';
-    //sets static position of cup to stop it from moving past the right side of the container.
-    if (mouseX >= gameArea.width * 0.9) {
-        cup.style.left = (gameArea.width * 0.9)+ 'px'
-    }
-});
 // GENERATE FALLING BOBA
 
 function createBoba() {
-    let bobaStart = 950;
-    let bobaX = Math.floor(Math.random() * 850);
+    let bobaSize = settings.game.bobaSizePercent
+    let bobaStart = gameArea.height - bobaSize;
+    let bobaX = Math.floor(Math.random() * gameArea.width);
     const boba = document.createElement('div');
     boba.setAttribute("class", 'boba');
+    boba.style = `
+    width: ${bobaSize}%;
+    height: ${bobaSize / 2}%;
+    border-radius: 50%;
+    background: black;
+    position: absolute;
+    `
     gameContainer.append(boba)
 
     function fallingBoba() {
         bobaStart -= 8;
         boba.style.bottom = bobaStart + 'px';
         boba.style.left = bobaX + 'px';
-        if(bobaStart < 157) {
+        if(bobaStart < (0.1 * gameArea.height)) {
             boba.remove();
         }
     }
