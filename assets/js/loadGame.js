@@ -39,7 +39,7 @@ function createCup() {
     let cup = document.createElement("div")
     cup.id = "cup"
     cup.style = `
-    background-image: url("assets/img/cup.png");
+    background-image: url("cup.png");
     background-size: ${100}%;
     width: ${cupWidth}%;
     height: ${settings.game.cupHeightPercentOfHeight}%;
