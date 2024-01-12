@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 </head>
 <body>
-    <h1>Boba Catch</h1>
-    <div id="windowSizeWarning">loading...</div>
-    <div id="game-container">
-        <div id="end-zone"></div>
-        <div id="cup"></div>
+    <h1 id="header">Boba Catch</h1>
+    <div id="window-size-warning">loading...</div>
+    <div id="display-area">
+        <div id="game-container">
+            <div id="game-paused"></div>
+            <div id="end-zone"></div>
+            <div id="cup"></div>
+        </div>
     </div>
+    
     <script type="module" src="assets/js/checkWindowSize.js" defer></script>
     <script type="module" src="assets/js/loadGame.js" defer></script>
     <script type="module" src="assets/js/main.js"></script>

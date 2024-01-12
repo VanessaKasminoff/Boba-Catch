@@ -1,18 +1,25 @@
 body {
-    height: 100vh;
-    width: 100vw;
+    margin: 0;
+    padding: 0;
+    height: 0px;
     background: lightblue;
+}
+#header {
+    height: 40px;
+    position: fixed;
 }
 
 #game-container {
-    height: 1000px;
-    width: 1000px;
     background: pink;
-    border: 1px solid brown;
+    outline: 1px solid brown;
     margin: auto;
     position: relative;
 }
 
+#game-paused {
+    position: fixed;
+    
+}
 #end-zone {
     height: 158px;
     width: 100%;
@@ -36,4 +43,11 @@ body {
     border-radius: 50%;
     background: black;
     position: absolute;
+}
+
+#window-size-warning{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%
 }
