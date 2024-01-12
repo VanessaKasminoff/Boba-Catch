@@ -4,7 +4,9 @@ let heightValue = settings.windowSize.heightValue
 let widthValue = settings.windowSize.widthValue
 
 let windowIsBigEnough = true
-export function checkMinimumWindowSize(){
+export function onWindowResize(){
+
+    //Below checks height and width against height and width defined in settings.json
     if(window.innerHeight < heightValue || window.innerWidth < widthValue) {
         console.log(`Hiding page... Window too small as ${window.innerHeight} and ${window.innerWidth}`)
         windowIsBigEnough = false
@@ -22,7 +24,7 @@ export function checkMinimumWindowSize(){
     } else if (window.innerHeight >= heightValue && window.innerWidth >= widthValue && windowIsBigEnough === true){
         console.log(`Page still large enough as ${window.innerHeight} and ${window.innerWidth}`)
         document.getElementById("window-size-warning").textContent = ""
-
     }
+    // Below resizes the game area with a function from loadGame.js
     resizeGameArea(document.getElementById("game-container"))
 }

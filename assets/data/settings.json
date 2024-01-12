@@ -1,5 +1,8 @@
 {
     "windowSize":
 {"widthValue" : 150,
-"heightValue" : 300}
+"heightValue" : 300},
+    "game": {
+        "cupSizePercent": 5
+    }
 }
