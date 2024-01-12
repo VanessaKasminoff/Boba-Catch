@@ -24,7 +24,7 @@ function createTable() {
     let table = document.createElement('div')
     table.id = "table"
     table.style = `
-    background-image: url("/assets/img/table.png");
+    background-image: url("assets/img/table.png");
     background-size: ${100}% ${100}%;
     width: 100%;
     height: ${settings.game.tableHeightPercentOfHeight}%;
@@ -39,7 +39,7 @@ function createCup() {
     let cup = document.createElement("div")
     cup.id = "cup"
     cup.style = `
-    background-image: url("/assets/img/cup.png");
+    background-image: url("assets/img/cup.png");
     background-size: ${100}%;
     width: ${cupWidth}%;
     height: ${settings.game.cupHeightPercentOfHeight}%;
@@ -161,7 +161,7 @@ export function loadGame(gameContainer) {
                     if (cup.liquid == "black"){
                         let splash =document.createElement('div')
                         splash.style = `
-                        background-image: url("/assets/img/multisplashblack.png");
+                        background-image: url("assets/img/multisplashblack.png");
                         background-size: ${100}% ${100}%;
                         width: ${settings.game.splashSizeWidthByPercentOfWidth}%;
                         height: ${settings.game.splashSizeHeightByPercentOfHeight}%;
