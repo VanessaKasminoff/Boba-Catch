@@ -1,7 +1,7 @@
 import settings from '../data/settings.json' assert { type: 'json' };
 let cupWidth = settings.game.cupSizePercentOfWidth
 let dynamicGameArea // if this value was returned in resizeGameArea, then it would only be returned for the instance it was invoked. This is problematic because we need this value to be changed on each resize.
-let game = {score:0, time:0, bobaCaught:0}
+let game = {score:0, time:0, bobaCaught:0, consecutive:0, liquidMultiplier:1, streakMultiplier:1, maxMultiplier:2, totalMultiplier:1}
 
 export function resizeGameArea(container) {
     let solutionWidth
@@ -46,18 +46,21 @@ function createCup() {
     position: absolute;
     bottom: ${settings.game.cupHeightByPercentOfHeight}%
     `
+    //testing below
     cup.liquid = "black"
+    game.liquidMultiplier = 1.2
+
     return cup
 }
 
-function createTracker(tracker) {
+function createTracker(tracker, data) {
     let trackerElement = document.createElement("div")
     trackerElement.id = `${tracker}Div`
     trackerElement.style = `
     text-align:center;
     `
     trackerElement.classList.add("comicSans30bold")
-    trackerElement.innerHTML = `${tracker}<br>0`
+    trackerElement.innerHTML = `${tracker}<br>${data}`
     return trackerElement
 }
 
@@ -111,7 +114,7 @@ export function loadGame(gameContainer) {
     gameContainer.append(createTable())
     let gameHeader = createGameHeader()
     gameContainer.append(gameHeader)
-    gameHeader.append(createTracker("score"), createTracker("time"), createTracker("boba"))
+    gameHeader.append(createTracker("score", game.score), createTracker("time", game.time), createTracker("streak", game.consecutive),  createTracker("boba", game.bobaCaught), createTracker("joy", game.totalMultiplier))
 
 
     /* you COUUULD do 
@@ -123,6 +126,7 @@ export function loadGame(gameContainer) {
 
 // GENERATE FALLING BOBA
     function createBoba() {
+        let bobaBaseScore = 100
         let bobaSizePercent = settings.game.bobaSizePercentOfWidth 
         let bobaSize = (bobaSizePercent * .01 * dynamicGameArea.width) // for readability
         let bobaHeight = 100 - settings.game.bobaSizePercentOfWidth/2//dynamicGameArea.height - bobaSize;
@@ -157,7 +161,6 @@ export function loadGame(gameContainer) {
                     console.log("caught")
                     boba.remove()
 
-                    let multiplier = 1
                     if (cup.liquid == "black"){
                         let splash =document.createElement('div')
                         splash.style = `
@@ -173,15 +176,24 @@ export function loadGame(gameContainer) {
                         setTimeout(() => {
                             splash.remove()
                         }, 300);
-                        multiplier = 1.2
                     } else if (cup.liquid == false) {
-                        multiplier = 1
+                        // no splash
                     }
 
-                    game.score += 10 * multiplier
+                    //recording consecutive catches
+                    game.consecutive += 1
+                    //streak multiplier
+                    if (game.streakMultiplier < 2) {
+                        ((
+                            game.streakMultiplier = 1 + 
+                                (0.1 * (Math.round((0.1 * game.consecutive).toFixed(0))))
+                        ) * 10).toFixed(0) /10
+                    }
+                    else if (game.streakMultiplier >= 2) {game.streakMultiplier = 2}
+                    //adding to score
+                    game.score += bobaBaseScore * game.liquidMultiplier * game.streakMultiplier
                     game.bobaCaught += 1
-                    document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
-                    document.getElementById("bobaDiv").innerHTML = `boba<br>${game.bobaCaught}`
+
                 }
             }
             //removal
@@ -191,12 +203,22 @@ export function loadGame(gameContainer) {
                 uncaught = false
                 console.log("YOU SUCCCCK")
 
-                
-                game.score -= 5
-                document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
+                game.consecutive = 0
+                game.streakMultiplier = 1
+                game.score -= bobaBaseScore
                 
             }
+            
+            game.totalMultiplier = (game.liquidMultiplier * game.streakMultiplier).toFixed(2)
 
+            document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
+            document.getElementById("bobaDiv").innerHTML = `boba<br>${game.bobaCaught}`
+            document.getElementById("streakDiv").innerHTML = `streak<br>${game.consecutive}`
+            document.getElementById("joyDiv").innerHTML = `
+            joy: x${game.totalMultiplier}
+            <br><span class="gameHeaderSubHeader">drink: x${game.liquidMultiplier}</span>
+            <br><span class="gameHeaderSubHeader">bonus: x${game.streakMultiplier}</span>
+            `
         //console.log("this is the falling boba function")
         }
 

@@ -21,6 +21,14 @@ body {
     
 }
 
+.gameHeaderHeader{
+    color:red;
+}
+
+.gameHeaderSubHeader{
+    color:gray;
+}
+
 .comicSans30bold{
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     font-size: 30px;
