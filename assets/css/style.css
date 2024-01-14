@@ -2,7 +2,8 @@ body {
     margin: 0;
     padding: 0;
     height: 0px;
-    background: lightblue;
+    background: rgb(175, 212, 223);
+    user-select: none;
 }
 #header {
     height: 40px;
@@ -11,14 +12,16 @@ body {
 
 #game-container {
     background: pink;
-    outline: 1px solid brown;
     margin: auto;
     position: relative;
+    box-shadow: 2px 10px 10px grey;
 }
 
 #game-paused {
     position: fixed;
-    
+    top: 40%;
+    left: 50%;
+    translate: -50% -50%;
 }
 
 .gameHeaderHeader{
@@ -31,7 +34,7 @@ body {
 
 .comicSans30bold{
     font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 30px;
+    font-size: 1rem;
     font-weight: bold;
 }
 
@@ -41,4 +44,46 @@ body {
     top: 50%;
     left: 50%;
     translate: -50% -50%
+}
+
+#splash {
+    height: fit-content;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    translate: -50% -50%;
+    text-align: center;
+}
+
+#game-title {
+    font-size: 3.5em;
+    color: maroon;
+}
+
+#play-game-button {
+    background: maroon;
+    border-radius: 20%;
+    width: min-content;
+    color: pink;
+    margin: auto;
+    font-size: 2em;
+    padding: 0% 8% 5%;
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    translate: -50% 0%;
+}
+
+#play-game-button:hover {
+    background: rgb(100, 0, 0);
+    color: rgb(255, 210, 210);
+    
+    
+}
+
+#play-game-button:active {
+    position: absolute;
+    bottom: -31%;
+    left: 51%;
+    translate: -50% 0%;
 }
