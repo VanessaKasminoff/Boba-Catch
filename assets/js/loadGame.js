@@ -1,7 +1,7 @@
 import settings from '../data/settings.json' assert { type: 'json' };
-let cupWidth = settings.game.cupSizePercentOfWidth
+let cupWidth = settings.game.cupWidth
 let dynamicGameArea // if this value was returned in resizeGameArea, then it would only be returned for the instance it was invoked. This is problematic because we need this value to be changed on each resize.
-let game = {score:0, time:0, bobaCaught:0, consecutive:0, liquidMultiplier:1, streakMultiplier:1, maxMultiplier:2, totalMultiplier:1}
+let game = {score: 0, time: 0, bobaCaught: 0, consecutive: 0, liquidMultiplier: 1, streakMultiplier: 1, maxMultiplier: 2, totalMultiplier: 1}
 
 export function resizeGameArea(container) {
     let solutionWidth
@@ -15,7 +15,7 @@ export function resizeGameArea(container) {
     container.style.top = (`${window.innerHeight * 0.02}px`)
     dynamicGameArea =  {
         width: solutionWidth,
-        height: solutionWidth*2
+        height: solutionWidth * 2
         }
      
 }
@@ -27,7 +27,7 @@ function createTable() {
     background-image: url("./assets/img/table.png");
     background-size: ${100}% ${100}%;
     width: 100%;
-    height: ${settings.game.tableHeightPercentOfHeight}%;
+    height: ${settings.game.tableY}%;
     position: absolute;
     bottom: ${0}px
     `
@@ -42,9 +42,9 @@ function createCup() {
     background-image: url("./assets/img/cup.png");
     background-size: ${100}%;
     width: ${cupWidth}%;
-    height: ${settings.game.cupHeightPercentOfHeight}%;
+    height: ${settings.game.cupHeight}%;
     position: absolute;
-    bottom: ${settings.game.cupHeightByPercentOfHeight}%
+    bottom: ${settings.game.cupY}%
     `
     //testing below
     cup.liquid = "black"
@@ -73,7 +73,7 @@ function createGameHeader() {
     top: 0;
     left: 0;
     width: 100%;
-    height: ${settings.game.gameHeaderHeightPercent}%;
+    height: ${settings.game.gameHeaderHeight}%;
     display: flex;
     justify-content: space-between;
     `
@@ -89,14 +89,14 @@ function attachCupMouseMovement(cup, gameContainer) {
         //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
         const mouseX = e.clientX - gameContainerPos.left;
         //updates the cup's position.
-        let halfCupWidth = (cupWidth * 0.01 * dynamicGameArea.width)/2
-        let halfBobaWidth = dynamicGameArea.width * settings.game.bobaSizePercentOfWidth * .01  / 2
+        let halfCupWidth = (cupWidth * 0.01 * dynamicGameArea.width) / 2
+        let halfBobaWidth = dynamicGameArea.width * settings.game.bobaWidth * .01  / 2
         //console.log(halfBobaWidth)
         //console.log(halfCupWidth)
 
         cup.style.left = (mouseX - halfCupWidth)+ 'px';
-        cup.leftBound = (mouseX - halfCupWidth - halfBobaWidth)/dynamicGameArea.width *100
-        cup.rightBound = (mouseX + halfCupWidth - halfBobaWidth)/dynamicGameArea.width *100
+        cup.leftBound = (mouseX - halfCupWidth - halfBobaWidth)/dynamicGameArea.width * 100
+        cup.rightBound = (mouseX + halfCupWidth - halfBobaWidth)/dynamicGameArea.width * 100
 
         //sets static position of cup to stop it from moving past the right side of the container.
         if (mouseX >= dynamicGameArea.width * 0.9 + halfCupWidth) {
@@ -114,7 +114,13 @@ export function loadGame(gameContainer) {
     gameContainer.append(createTable())
     let gameHeader = createGameHeader()
     gameContainer.append(gameHeader)
-    gameHeader.append(createTracker("score", game.score), createTracker("time", game.time), createTracker("streak", game.consecutive),  createTracker("boba", game.bobaCaught), createTracker("joy", game.totalMultiplier))
+    gameHeader.append(
+        createTracker("score", game.score), 
+        createTracker("time", game.time), 
+        createTracker("streak", game.consecutive),  
+        createTracker("boba", game.bobaCaught), 
+        createTracker("joy", game.totalMultiplier)
+        )
 
 
     /* you COUUULD do 
@@ -127,10 +133,10 @@ export function loadGame(gameContainer) {
 // GENERATE FALLING BOBA
     function createBoba() {
         let bobaBaseScore = 100
-        let bobaSizePercent = settings.game.bobaSizePercentOfWidth 
-        let bobaSize = (bobaSizePercent * .01 * dynamicGameArea.width) // for readability
-        let bobaHeight = 100 - settings.game.bobaSizePercentOfWidth/2//dynamicGameArea.height - bobaSize;
-        let bobaX = Math.random() * (100- bobaSizePercent)
+        let bobaSizePercent = settings.game.bobaWidth 
+        let bobaSize = (bobaSizePercent * .01 * dynamicGameArea.width) //for readability
+        let bobaHeight = 100 - settings.game.bobaWidth / 2 //dynamicGameArea.height - bobaSize;
+        let bobaX = Math.random() * (100 - bobaSizePercent)
         const boba = document.createElement('div');
         boba.style = `
         width: ${bobaSizePercent}%;
@@ -150,9 +156,9 @@ export function loadGame(gameContainer) {
             
             //catching
 
-            let cupRimHeight = settings.game.cupHeightByPercentOfHeight + settings.game.cupHeightPercentOfHeight -settings.game.bobaSizePercentOfWidth/4 //((settings.game.cupHeightByPercentOfHeight + settings.game.cupHeightPercentOfHeight -settings.game.bobaSizePercentOfWidth/4) * .01 * dynamicGameArea.height)
-            let halfCupHeight = cupRimHeight - (settings.game.cupHeightPercentOfHeight * dynamicGameArea.width  *.01 )
-            let tableHeight = settings.game.tableHeightPercentOfHeight - settings.game.bobaSizePercentOfWidth//((settings.game.tableHeightPercentOfHeight - settings.game.bobaSizePercentOfWidth) * dynamicGameArea.height * .01)
+            let cupRimHeight = settings.game.cupY + settings.game.cupHeight -settings.game.bobaWidth / 4 //((settings.game.cupY + settings.game.cupHeight -settings.game.bobaWidth/4) * .01 * dynamicGameArea.height)
+            let halfCupHeight = cupRimHeight - (settings.game.cupHeight * dynamicGameArea.width  * .01 )
+            let tableHeight = settings.game.tableY - settings.game.bobaWidth //((settings.game.tableY - settings.game.bobaWidth) * dynamicGameArea.height * .01)
             //console.log(cupRimHeight)
             //console.log(halfCupHeight)
             if(uncaught && bobaHeight > halfCupHeight && bobaHeight < cupRimHeight) {
@@ -162,15 +168,15 @@ export function loadGame(gameContainer) {
                     boba.remove()
 
                     if (cup.liquid == "black"){
-                        let splash =document.createElement('div')
+                        let splash = document.createElement('div')
                         splash.style = `
                         background-image: url("./assets/img/multisplashblack.png");
                         background-size: ${100}% ${100}%;
-                        width: ${settings.game.splashSizeWidthByPercentOfWidth}%;
-                        height: ${settings.game.splashSizeHeightByPercentOfHeight}%;
+                        width: ${settings.game.splashWidth}%;
+                        height: ${settings.game.splashHeight}%;
                         position: absolute;
                         bottom: ${cupRimHeight}%;
-                        left: ${bobaX - settings.game.splashSizeWidthByPercentOfWidth/4}%
+                        left: ${bobaX - settings.game.splashWidth / 4}%
                         `
                         gameContainer.append(splash)
                         setTimeout(() => {
@@ -187,7 +193,7 @@ export function loadGame(gameContainer) {
                         ((
                             game.streakMultiplier = 1 + 
                                 (0.1 * (Math.round((0.1 * game.consecutive).toFixed(0))))
-                        ) * 10).toFixed(0) /10
+                        ) * 10).toFixed(0) / 10
                     }
                     else if (game.streakMultiplier >= 2) {game.streakMultiplier = 2}
                     //adding to score

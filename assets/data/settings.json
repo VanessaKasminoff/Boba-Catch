@@ -3,13 +3,13 @@
 {"widthValue" : 150,
 "heightValue" : 300},
     "game": {
-        "cupSizePercentOfWidth": 10,
-        "cupHeightPercentOfHeight": 10,
-        "bobaSizePercentOfWidth": 3,
-        "tableHeightPercentOfHeight": 15,
-        "cupHeightByPercentOfHeight": 14,
-        "splashSizeWidthByPercentOfWidth":9,
-        "splashSizeHeightByPercentOfHeight":3,
-        "gameHeaderHeightPercent":7
+        "cupWidth": 10,
+        "cupHeight": 10,
+        "bobaWidth": 3,
+        "tableY": 15,
+        "cupY": 14,
+        "splashWidth":9,
+        "splashHeight":3,
+        "gameHeaderHeight":7
     }
 }
