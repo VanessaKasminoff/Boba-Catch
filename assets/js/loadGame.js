@@ -190,10 +190,7 @@ export function loadGame(gameContainer) {
                     game.consecutive += 1
                     //streak multiplier
                     if (game.streakMultiplier < 2) {
-                        ((
-                            game.streakMultiplier = 1 + 
-                                (0.1 * (Math.round((0.1 * game.consecutive).toFixed(0))))
-                        ) * 10).toFixed(0) / 10
+                            game.streakMultiplier = (Math.floor(10 + game.consecutive / 10)) / 10
                     }
                     else if (game.streakMultiplier >= 2) {game.streakMultiplier = 2}
                     //adding to score
