@@ -1,4 +1,5 @@
 import settings from '../data/settings.json' assert { type: 'json' };
+import { loadGameOver } from './loadGameOver.js';
 let cupWidth = settings.game.cupWidth
 let dynamicGameArea // if this value was returned in resizeGameArea, then it would only be returned for the instance it was invoked. This is problematic because we need this value to be changed on each resize.
 let game = {score: 0, time: 0, bobaCaught: 0, consecutive: 0, liquidMultiplier: 1, streakMultiplier: 1, maxMultiplier: 2, totalMultiplier: 1}
@@ -132,6 +133,15 @@ export function loadGame(gameContainer) {
     gameContainer.append(cup)
     attachCupMouseMovement(cup, gameContainer)
 
+    // timer
+    game.time = 10;
+    let timer = setInterval(() => {
+        game.time--
+        if (game.time <= 0) {
+            clearInterval(timer)
+        }
+    }, 1000)
+
 // GENERATE FALLING BOBA
     function createBoba() {
         let bobaBaseScore = 100
@@ -217,6 +227,7 @@ export function loadGame(gameContainer) {
             game.totalMultiplier = (game.liquidMultiplier * game.streakMultiplier).toFixed(2)
 
             document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
+            document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
             document.getElementById("bobaDiv").innerHTML = `boba<br>${game.bobaCaught}`
             document.getElementById("streakDiv").innerHTML = `streak<br>${game.consecutive}`
             document.getElementById("joyDiv").innerHTML = `
@@ -227,11 +238,17 @@ export function loadGame(gameContainer) {
         //console.log("this is the falling boba function")
         }
 
-    setInterval(fallingBoba, 1);
-    setTimeout(createBoba, 1200);
-
+        let fallingBobaInt = setInterval(fallingBoba, 1);
+        let bobaTimeout = setTimeout(createBoba, 1000);
+        if (game.time <= 0) {
+            clearInterval(fallingBobaInt)
+            clearTimeout(bobaTimeout)
+            loadGameOver(gameContainer)
+        }
     }
 
+// let chupacabra = setInterval(function, timeInterval)
+// clearInterval(chupacabra)
 
 createBoba();
 
