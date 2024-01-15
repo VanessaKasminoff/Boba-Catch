@@ -234,7 +234,7 @@ export function loadGame(gameContainer) {
                     }
                     else if (game.streakMultiplier >= 2) {game.streakMultiplier = 2}
                     //adding to score
-                    game.score += bobaBaseScore * game.liquidMultiplier * game.streakMultiplier
+                    game.score += Math.floor(bobaBaseScore * game.liquidMultiplier * game.streakMultiplier)
                     game.bobaCaught += 1
 
                 }
@@ -248,13 +248,13 @@ export function loadGame(gameContainer) {
 
                 game.consecutive = 0
                 game.streakMultiplier = 1
-                game.score -= bobaBaseScore
+                game.score -= Math.floor(bobaBaseScore)
                 
             }
             
             game.totalMultiplier = (game.liquidMultiplier * game.streakMultiplier).toFixed(2)
             
-            document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
+            document.getElementById("scoreDiv").innerHTML = `score<br>${Math.floor(game.score)}`
             document.getElementById("bobaDiv").innerHTML = `boba<br>${game.bobaCaught}`
             document.getElementById("streakDiv").innerHTML = `streak<br>${game.consecutive}`
             document.getElementById("joyDiv").innerHTML = `
