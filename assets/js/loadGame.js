@@ -130,7 +130,7 @@ export function loadGame(gameContainer) {
     let gameHeader = createGameHeader()
     gameContainer.append(gameHeader)
 
-    gameContainer.style.background = "url('./assets/img/game-background.png')"
+    gameContainer.style.backgroundImage = "url('./assets/img/game-background.png')"
     gameContainer.style.backgroundSize = "100% 100%"
 
     game.time = 60;
