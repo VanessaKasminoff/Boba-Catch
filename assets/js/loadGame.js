@@ -130,7 +130,7 @@ export function loadGame(gameContainer) {
     let gameHeader = createGameHeader()
     gameContainer.append(gameHeader)
 
-    game.time = 5;
+    game.time = 60;
     game.score = 0
     game.consecutive = 0
     game.bobaCaught = 0
