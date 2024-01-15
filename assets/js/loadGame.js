@@ -2,7 +2,19 @@ import settings from '../data/settings.json' assert { type: 'json' };
 import { loadGameOver } from './loadGameOver.js';
 let cupWidth = settings.game.cupWidth
 let dynamicGameArea // if this value was returned in resizeGameArea, then it would only be returned for the instance it was invoked. This is problematic because we need this value to be changed on each resize.
-let game = {score: 0, time: 0, bobaCaught: 0, consecutive: 0, liquidMultiplier: 1, streakMultiplier: 1, maxMultiplier: 2, totalMultiplier: 1}
+let game = {
+    score: 0,
+    time: 0,
+    bobaCaught: 0,
+    consecutive: 0, 
+    liquidMultiplier: 1, 
+    streakMultiplier: 1, 
+    maxMultiplier: 2, 
+    totalMultiplier: 1,
+    fallingBobaInterval: undefined,
+    bobaTimeout: undefined,
+    checkGameOverInterval: undefined
+}
 
 export function resizeGameArea(container) {
     let solutionWidth
@@ -47,9 +59,9 @@ function createCup() {
     position: absolute;
     bottom: ${settings.game.cupY}%
     `
-    //testing below
-    cup.liquid = "black"
-    game.liquidMultiplier = 1.2
+    //TESTING LIQUID FEATURES
+    cup.liquid = "black" // ESSENTIAL FOR SPLASHING
+    //game.liquidMultiplier = 1.2
 
     return cup
 }
@@ -117,9 +129,17 @@ export function loadGame(gameContainer) {
     gameContainer.append(createTable())
     let gameHeader = createGameHeader()
     gameContainer.append(gameHeader)
+
+    game.time = 5;
+    game.score = 0
+    game.consecutive = 0
+    game.bobaCaught = 0
+    game.totalMultiplier = 1
+    game.streakMultiplier = 1
+
     gameHeader.append(
-        createTracker("score", game.score), 
         createTracker("time", game.time), 
+        createTracker("score", game.score), 
         createTracker("streak", game.consecutive),  
         createTracker("boba", game.bobaCaught), 
         createTracker("joy", game.totalMultiplier)
@@ -133,23 +153,25 @@ export function loadGame(gameContainer) {
     gameContainer.append(cup)
     attachCupMouseMovement(cup, gameContainer)
 
-    // timer
-    game.time = 10;
+    // TIMER
+    document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
     let timer = setInterval(() => {
         game.time--
+        document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
         if (game.time <= 0) {
             clearInterval(timer)
         }
     }, 1000)
 
 // GENERATE FALLING BOBA
-    function createBoba() {
+    function createBoba() { // start createBoba function
         let bobaBaseScore = 100
         let bobaSizePercent = settings.game.bobaWidth 
         let bobaSize = (bobaSizePercent * .01 * dynamicGameArea.width) //for readability
         let bobaHeight = 100 - settings.game.bobaWidth / 2 //dynamicGameArea.height - bobaSize;
         let bobaX = Math.random() * (100 - bobaSizePercent)
         const boba = document.createElement('div');
+        boba.classList.add('boba')
         boba.style = `
         width: ${bobaSizePercent}%;
         height: ${bobaSizePercent / 2}%;
@@ -163,16 +185,19 @@ export function loadGame(gameContainer) {
 
         let uncaught = true
         function fallingBoba() {
+            if (game.time > 0){
             bobaHeight -= .1;
             boba.style.bottom = bobaHeight + '%';
             
             //catching
 
-            let cupRimHeight = settings.game.cupY + settings.game.cupHeight -settings.game.bobaWidth / 4 //((settings.game.cupY + settings.game.cupHeight -settings.game.bobaWidth/4) * .01 * dynamicGameArea.height)
-            let halfCupHeight = cupRimHeight - (settings.game.cupHeight * dynamicGameArea.width  * .01 )
+            let cupRimHeight = settings.game.cupY + settings.game.cupHeight - settings.game.bobaWidth / 4 //((settings.game.cupY + settings.game.cupHeight -settings.game.bobaWidth/4) * .01 * dynamicGameArea.height)
+            let halfCupHeight = settings.game.cupY + settings.game.cupHeight * .9
             let tableHeight = settings.game.tableY - settings.game.bobaWidth //((settings.game.tableY - settings.game.bobaWidth) * dynamicGameArea.height * .01)
             //console.log(cupRimHeight)
             //console.log(halfCupHeight)
+
+            // valid catch below
             if(uncaught && bobaHeight > halfCupHeight && bobaHeight < cupRimHeight) {
                 if((bobaX > cup.leftBound) && (bobaX < cup.rightBound)){
                     uncaught = false
@@ -211,7 +236,7 @@ export function loadGame(gameContainer) {
 
                 }
             }
-            //removal
+            //did not catch booo splat. hehe
             if(uncaught && bobaHeight < tableHeight) {
                 boba.remove()
                 
@@ -225,9 +250,8 @@ export function loadGame(gameContainer) {
             }
             
             game.totalMultiplier = (game.liquidMultiplier * game.streakMultiplier).toFixed(2)
-
+            
             document.getElementById("scoreDiv").innerHTML = `score<br>${game.score}`
-            document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
             document.getElementById("bobaDiv").innerHTML = `boba<br>${game.bobaCaught}`
             document.getElementById("streakDiv").innerHTML = `streak<br>${game.consecutive}`
             document.getElementById("joyDiv").innerHTML = `
@@ -235,21 +259,23 @@ export function loadGame(gameContainer) {
             <br><span class="gameHeaderSubHeader">drink: x${game.liquidMultiplier}</span>
             <br><span class="gameHeaderSubHeader">bonus: x${game.streakMultiplier}</span>
             `
-        //console.log("this is the falling boba function")
-        }
+        } else if (game.time <= 0) {uncaught = false}
+        
+        }//console.log("this is the end of the falling boba function")
 
-        let fallingBobaInt = setInterval(fallingBoba, 1);
-        let bobaTimeout = setTimeout(createBoba, 1000);
+        game.fallingBobaInterval = setInterval(fallingBoba, 1);
+        game.bobaTimeout = setTimeout(createBoba, 1000);
+
+    } //end create boba function
+
+    function checkGameOver(){
         if (game.time <= 0) {
-            clearInterval(fallingBobaInt)
-            clearTimeout(bobaTimeout)
-            loadGameOver(gameContainer)
+            clearInterval(game.fallingBobaInterval)
+            clearTimeout(game.bobaTimeout)
+            clearInterval(game.checkGameOverInterval)
+            loadGameOver(gameContainer, game.score)
         }
     }
-
-// let chupacabra = setInterval(function, timeInterval)
-// clearInterval(chupacabra)
-
-createBoba();
-
+createBoba()
+game.checkGameOverInterval = setInterval(checkGameOver, 10)
 }
