@@ -9,7 +9,7 @@ export function loadGameOver(gameContainer, score) {
     }
 
     gameContainer.innerHTML = ""
-    gameContainer.style.background = "pink"
+    gameContainer.style.backgroundImage = "url('./assets/img/splash-background.png')"
 
     let gameOver = document.createElement("div");
     gameOver.id = "game-over-container"

@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     height: 0px;
-    background: rgb(175, 212, 223);
+    background: rgb(234, 255, 255);
     user-select: none;
 }
 #header {
@@ -57,7 +57,7 @@ body {
 
 #game-title {
     font-size: 3em;
-    color: maroon;
+    /* color: maroon; */
 }
 
 #play-game-button {

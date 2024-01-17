@@ -130,10 +130,10 @@ export function loadGame(gameContainer) {
     let gameHeader = createGameHeader()
     gameContainer.append(gameHeader)
 
-    gameContainer.style.backgroundImage = "url('./assets/img/game-background.png')"
+    gameContainer.style.backgroundImage = "url('./assets/img/game-background-blurred.jpg')"
     gameContainer.style.backgroundSize = "100% 100%"
 
-    game.time = 60;
+    game.time = 10;
     game.score = 0
     game.consecutive = 0
     game.bobaCaught = 0

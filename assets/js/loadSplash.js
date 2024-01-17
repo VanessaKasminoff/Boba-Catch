@@ -1,8 +1,8 @@
 import { loadGame } from "./loadGame.js";
 
 export function loadSplash(gameContainer) {
-    gameContainer.style.background = "pink"
-    
+    gameContainer.style.backgroundImage = "url('./assets/img/splash-background.png')"
+
     let splash = document.createElement("div")
     splash.id = 'splash'
     splash.innerHTML = `
