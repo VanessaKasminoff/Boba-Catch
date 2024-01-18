@@ -13,7 +13,8 @@ let game = {
     totalMultiplier: 1,
     fallingBobaInterval: undefined,
     bobaTimeout: undefined,
-    checkGameOverInterval: undefined
+    checkGameOverInterval: undefined,
+    highScoreArray: []
 }
 
 export function resizeGameArea(container) {
@@ -133,7 +134,7 @@ export function loadGame(gameContainer) {
     gameContainer.style.backgroundImage = "url('./assets/img/game-background-blurred.jpg')"
     gameContainer.style.backgroundSize = "100% 100%"
 
-    game.time = 10;
+    game.time = 60;
     game.score = 0
     game.consecutive = 0
     game.bobaCaught = 0
@@ -273,10 +274,11 @@ export function loadGame(gameContainer) {
 
     function checkGameOver(){
         if (game.time <= 0) {
+            // [700, 300, 100, 500, 22000, 700, -800, 1200, 2300, -1400]
             clearInterval(game.fallingBobaInterval)
             clearTimeout(game.bobaTimeout)
             clearInterval(game.checkGameOverInterval)
-            loadGameOver(gameContainer, game.score)
+            loadGameOver(gameContainer, game.score, game.highScoreArray)
         }
     }
 createBoba()

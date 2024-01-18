@@ -38,6 +38,14 @@ body {
     font-weight: bold;
 }
 
+h2.comicSans30bold {
+   font-size: 1.7em; 
+}
+
+h3.comicSans30bold {
+     color: maroon;
+     margin-top: 12%;
+ }
 
 #window-size-warning{
     position: fixed;
@@ -56,7 +64,8 @@ body {
 }
 
 #game-title {
-    font-size: 3em;
+    font-size: 4.5em;
+    width: min-content;
     /* color: maroon; */
 }
 
@@ -96,7 +105,7 @@ body {
 }
 
 #game-over-title {
-    font-size: 3em;
+    font-size: 3.5em;
 }
 
 #play-again-button {
@@ -108,7 +117,7 @@ body {
     font-size: 2em;
     padding: 0% 8% 5%;
     position: absolute;
-    bottom: -50%;
+    bottom: -20%;
     left: 50%;
     translate: -50% 0%;
 }
@@ -120,7 +129,7 @@ body {
 
 #play-again-button:active {
     position: absolute;
-    bottom: -51%;
+    bottom: -21%;
     left: 51%;
     translate: -50% 0%;
 }
