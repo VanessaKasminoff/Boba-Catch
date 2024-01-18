@@ -268,7 +268,7 @@ export function loadGame(gameContainer) {
         }//console.log("this is the end of the falling boba function")
 
         game.fallingBobaInterval = setInterval(fallingBoba, 1);
-        game.bobaTimeout = setTimeout(createBoba, 1000);
+        game.bobaTimeout = setTimeout(createBoba, 550);
 
     } //end create boba function
 
