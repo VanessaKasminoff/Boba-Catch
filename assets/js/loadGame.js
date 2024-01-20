@@ -6,6 +6,7 @@ let game = {
     score: 0,
     time: 0,
     bobaCaught: 0,
+    crawlersCaught: 0,
     consecutive: 0, 
     liquidMultiplier: 1, 
     streakMultiplier: 1, 
@@ -13,6 +14,8 @@ let game = {
     totalMultiplier: 1,
     fallingBobaInterval: undefined,
     bobaTimeout: undefined,
+    fallingCrawlersInterval: undefined,
+    crawlerTimeout: undefined,
     checkGameOverInterval: undefined,
     highScoreArray: []
 }
@@ -138,6 +141,7 @@ export function loadGame(gameContainer) {
     game.score = 0
     game.consecutive = 0
     game.bobaCaught = 0
+    game.crawlersCaught = 3
     game.totalMultiplier = 1
     game.streakMultiplier = 1
 
@@ -146,6 +150,7 @@ export function loadGame(gameContainer) {
         createTracker("score", game.score), 
         createTracker("streak", game.consecutive),  
         createTracker("boba", game.bobaCaught), 
+        createTracker("crawlers", game.crawlersCaught),
         createTracker("joy", game.totalMultiplier)
         )
 
@@ -188,6 +193,7 @@ export function loadGame(gameContainer) {
         gameContainer.append(boba)
 
         let uncaught = true
+
         function fallingBoba() {
             if (game.time > 0){
             bobaHeight -= .1;
@@ -272,15 +278,97 @@ export function loadGame(gameContainer) {
 
     } //end create boba function
 
+    function createCrawlers() { //start create crawler function
+        let crawlerBaseScore = -100
+        let crawlerSizePercent = settings.game.crawlerWidth
+        let crawlerSize = (crawlerSizePercent * .01 * dynamicGameArea.width)
+        let crawlerHeight = 100 - settings.game.crawlerWidth / 2
+        let crawlerX = Math.random() * (100 - crawlerSizePercent)
+        const crawler = document.createElement('div');
+        crawler.classList.add('crawler')
+        crawler.style = `
+        width: ${crawlerSizePercent}%;
+        height: ${crawlerSizePercent / 2}%;
+        left: ${crawlerX}%;
+        bottom: ${crawlerHeight}%; 
+        border-radius: 50% 0 0 50%;
+        background: maroon;
+        position: absolute;
+        `
+        gameContainer.append(crawler)
+
+        let uncaughtCrawler = true
+
+        function fallingCrawlers() {
+            if (game.time > 0){
+                crawlerHeight -= .1;
+                crawler.style.bottom = crawlerHeight + '%';
+                
+                //catching
+    
+                let cupRimHeight = settings.game.cupY + settings.game.cupHeight - settings.game.crawlerWidth / 4 
+                let halfCupHeight = settings.game.cupY + settings.game.cupHeight * .9
+                let tableHeight = settings.game.tableY - settings.game.crawlerWidth 
+
+                if(uncaughtCrawler && crawlerHeight > halfCupHeight && crawlerHeight < cupRimHeight) {
+                    if((crawlerX > cup.leftBound) && (crawlerX < cup.rightBound)){
+                        uncaughtCrawler = false
+                        console.log("caught crawler")
+                        crawler.remove()
+    
+                        if (cup.liquid == "black"){
+                            let splash = document.createElement('div')
+                            splash.style = `
+                            background-image: url("./assets/img/multisplashdarkred.png");
+                            background-size: ${100}% ${100}%;
+                            width: ${settings.game.splashWidth}%;
+                            height: ${settings.game.splashHeight}%;
+                            position: absolute;
+                            bottom: ${cupRimHeight}%;
+                            left: ${crawlerX - settings.game.splashWidth / 4}%
+                            `
+                            gameContainer.append(splash)
+                            setTimeout(() => {
+                                splash.remove()
+                            }, 300);
+                        } else if (cup.liquid == false) {
+                            // no splash
+                        }
+
+                        game.crawlersCaught -= 1
+                        game.score += crawlerBaseScore
+                }
+            }
+
+            if(uncaughtCrawler && crawlerHeight < tableHeight) {
+                crawler.remove()
+                
+                uncaughtCrawler = false
+                console.log("WOOHOOO NO CRAWLER")                
+            }
+
+            document.getElementById("crawlersDiv").innerHTML = `crawlers<br>${game.crawlersCaught}`
+
+        } else if (game.time <= 0) {uncaughtCrawler = false}
+    }
+
+        game.fallingCrawlersInterval = setInterval(fallingCrawlers, 1);
+        game.crawlerTimeout = setTimeout(createCrawlers, 2000);
+
+} //end create crawler function
+
     function checkGameOver(){
         if (game.time <= 0) {
             // [700, 300, 100, 500, 22000, 700, -800, 1200, 2300, -1400]
             clearInterval(game.fallingBobaInterval)
             clearTimeout(game.bobaTimeout)
+            clearInterval(game.fallingCrawlersInterval)
+            clearTimeout(game.crawlerTimeout)
             clearInterval(game.checkGameOverInterval)
             loadGameOver(gameContainer, game.score, game.highScoreArray)
         }
     }
 createBoba()
+createCrawlers()
 game.checkGameOverInterval = setInterval(checkGameOver, 10)
 }
