@@ -164,10 +164,12 @@ export function loadGame(gameContainer) {
     // TIMER
     document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
     let timer = setInterval(() => {
-        game.time--
-        document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
-        if (game.time <= 0) {
-            clearInterval(timer)
+        if(game.gross < 4){
+            game.time--
+            document.getElementById("timeDiv").innerHTML = `time<br>${game.time}`
+            if (game.time <= 0) {
+                clearInterval(timer)
+            }
         }
     }, 1000)
 
@@ -194,7 +196,7 @@ export function loadGame(gameContainer) {
         let uncaught = true
 
         function fallingBoba() {
-            if (game.time > 0){
+            if (game.time > 0 && game.gross < 4){
             bobaHeight -= .1;
             boba.style.bottom = bobaHeight + '%';
             
@@ -302,7 +304,7 @@ export function loadGame(gameContainer) {
         let uncaughtCrawler = true
 
         function fallingCrawlers() {
-            if (game.time > 0){
+            if (game.time > 0 && game.gross < 4){
                 crawlerHeight -= .1;
                 crawler.style.bottom = crawlerHeight + '%';
                 
