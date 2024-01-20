@@ -43,7 +43,7 @@ h2.comicSans30bold {
 }
 
 h3.comicSans30bold {
-     color: maroon;
+     color: rgb(100, 0, 67);
      margin-top: 12%;
  }
 
@@ -66,11 +66,59 @@ h3.comicSans30bold {
 #game-title {
     font-size: 4.5em;
     width: min-content;
-    /* color: maroon; */
+}
+
+#how-to-container {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    translate: -50% -50%;
+    text-align: center;
+}
+
+#how-to-title {
+    font-size: 2.6em;
+    width: 100%;
+}
+
+.how-to-style {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+p.how-to-style {
+    font-size: .9em;
+}
+
+#main-menu-button {
+    background: rgb(128, 0, 85);
+    border-radius: 20%;
+    width: 90%;
+    color: pink;
+    margin: auto;
+    font-size: 1.5em;
+    padding: 0% 8% 5%;
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    translate: -50% 0%;
+}
+
+#main-menu-button:hover {
+    background: rgb(100, 0, 67);
+    color: rgb(255, 210, 210);
+}
+
+#main-menu-button:active {
+    position: absolute;
+    bottom: -11%;
+    left: 51%;
+    translate: -50% 0%;
 }
 
 #play-game-button {
-    background: maroon;
+    background: rgb(128, 0, 85);
     border-radius: 20%;
     width: min-content;
     color: pink;
@@ -84,13 +132,38 @@ h3.comicSans30bold {
 }
 
 #play-game-button:hover {
-    background: rgb(100, 0, 0);
+    background: rgb(100, 0, 67);
     color: rgb(255, 210, 210);
 }
 
 #play-game-button:active {
     position: absolute;
     bottom: -31%;
+    left: 51%;
+    translate: -50% 0%;
+}
+
+#how-to-play-button {
+    background: rgb(128, 0, 85);
+    border-radius: 20%;
+    width: 60%;
+    color: pink;
+    margin: auto;
+    padding: 0% 8% 5%;
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    translate: -50% 0%;
+}
+
+#how-to-play-button:hover {
+    background: rgb(100, 0, 67);
+    color: rgb(255, 210, 210);
+}
+
+#how-to-play-button:active {
+    position: absolute;
+    bottom: -11%;
     left: 51%;
     translate: -50% 0%;
 }
@@ -109,7 +182,7 @@ h3.comicSans30bold {
 }
 
 #play-again-button {
-    background: maroon;
+    background: rgb(128, 0, 85);
     border-radius: 20%;
     width: 60%;
     color: pink;
@@ -123,7 +196,7 @@ h3.comicSans30bold {
 }
 
 #play-again-button:hover {
-    background: rgb(100, 0, 0);
+    background: rgb(100, 0, 67);
     color: rgb(255, 210, 210);
 }
 
