@@ -76,7 +76,7 @@ function createTracker(tracker, data) {
     trackerElement.style = `
     text-align:center;
     `
-    trackerElement.classList.add("comicSans30bold")
+    trackerElement.className = "comicSans30bold gameHeaderStyle"
     trackerElement.innerHTML = `${tracker}<br>${data}`
     return trackerElement
 }
@@ -157,10 +157,6 @@ export function loadGame(gameContainer) {
         createTracker("joy", game.totalMultiplier)
         )
 
-
-    /* you COUUULD do 
-    gameContainer.append(attachCupMouseMovement(createCup(), gameContainer))
-    and return cup from attachCupMouseMovement... But that's unreadable to the human eye.*/
     let cup = createCup()
     gameContainer.append(cup)
     attachCupMouseMovement(cup, gameContainer)
@@ -322,7 +318,7 @@ export function loadGame(gameContainer) {
                         uncaughtCrawler = false
                         console.log("caught crawler")
                         crawler.remove()
-    
+
                         if (cup.liquid == "black"){
                             let splash = document.createElement('div')
                             splash.style = `
@@ -371,7 +367,7 @@ export function loadGame(gameContainer) {
                 grossData.style.color = "red";
             }
 
-        } else if (game.time <= 0) {uncaughtCrawler = false}
+        } else if (game.time <= 0 || game.gross > 3) {uncaughtCrawler = false}
     }
 
         game.fallingCrawlersInterval = setInterval(fallingCrawlers, 1);

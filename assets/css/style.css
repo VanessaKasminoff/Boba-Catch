@@ -10,6 +10,11 @@ body {
     position: fixed;
 }
 
+.gameHeaderStyle {
+    text-shadow: 2px 2px 1px pink;
+    color: rgb(128, 0, 85);
+}
+
 #game-container {
     background-size: 100% 100%;
     margin: auto;
@@ -29,7 +34,7 @@ body {
 }
 
 .gameHeaderSubHeader{
-    color:gray;
+    color:rgb(128, 0, 85);
 }
 
 .comicSans30bold{
