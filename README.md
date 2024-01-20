@@ -3,5 +3,5 @@ A cute catch game where you try to catch as much falling boba in your tea as you
 
 
 
-## Bugs
+## Fixed Bugs.. Literally.
 Currently trying to resolve a bug where the falling boba interval does not properly stop when the game ends from catching more than 3 crawlers.
