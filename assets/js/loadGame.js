@@ -105,14 +105,10 @@ function attachCupMouseMovement(cup, gameContainer) {
         gameContainer.addEventListener(event, function(e) {
             //gets the position of the container relative to the viewport.
             const gameContainerPos = gameContainer.getBoundingClientRect();
-
-            if(event.startsWith('touch')) {
-                e.preventDefault();
-            }
             //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
-
             let mouseX;
             if(event === 'touchmove') {
+                e.preventDefault();
                 mouseX = e.touches[0].clientX - gameContainerPos.left;
             } else {
                 mouseX = e.clientX - gameContainerPos.left;
