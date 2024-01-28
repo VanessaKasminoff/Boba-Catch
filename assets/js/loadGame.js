@@ -100,7 +100,7 @@ function createGameHeader() {
 
 //CUP MOVEMENT
 function attachCupMouseMovement(cup, gameContainer) {
-    let eventList = ['mousemove', 'touchmove'];
+    let eventList = ['mousemove', 'touchstart', 'touchmove'];
     for(let event of eventList) {
         gameContainer.addEventListener(event, function(e) {
             //gets the position of the container relative to the viewport.
