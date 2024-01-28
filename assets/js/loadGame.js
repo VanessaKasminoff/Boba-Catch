@@ -100,13 +100,23 @@ function createGameHeader() {
 
 //CUP MOVEMENT
 function attachCupMouseMovement(cup, gameContainer) {
-    let eventList = ['mousemove', 'touchstart', 'touchmove'];
+    let eventList = ['mousemove', 'touchmove'];
     for(let event of eventList) {
         gameContainer.addEventListener(event, function(e) {
             //gets the position of the container relative to the viewport.
             const gameContainerPos = gameContainer.getBoundingClientRect();
+
+            if(event.startsWith('touch')) {
+                e.preventDefault();
+            }
             //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
-            const mouseX = e.clientX - gameContainerPos.left;
+
+            let mouseX;
+            if(event === 'touchmove') {
+                mouseX = e.touches[0].clientX - gameContainerPos.left;
+            } else {
+                mouseX = e.clientX - gameContainerPos.left;
+            }
             //updates the cup's position.
             let halfCupWidth = (cupWidth * 0.01 * dynamicGameArea.width) / 2
             let halfBobaWidth = dynamicGameArea.width * settings.game.bobaWidth * .01  / 2
