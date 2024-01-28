@@ -100,32 +100,35 @@ function createGameHeader() {
 
 //CUP MOVEMENT
 function attachCupMouseMovement(cup, gameContainer) {
-    gameContainer.addEventListener('mousemove', function(e) {
-        //gets the position of the container relative to the viewport.
-        const gameContainerPos = gameContainer.getBoundingClientRect();
-        //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
-        const mouseX = e.clientX - gameContainerPos.left;
-        //updates the cup's position.
-        let halfCupWidth = (cupWidth * 0.01 * dynamicGameArea.width) / 2
-        let halfBobaWidth = dynamicGameArea.width * settings.game.bobaWidth * .01  / 2
-        let halfCrawlerWidth = dynamicGameArea.width * settings.game.crawlerWidth * .01  / 2
-        //console.log(halfBobaWidth)
-        //console.log(halfCupWidth)
+    let eventList = ['mousemove', 'touchmove'];
+    for(let event of eventList) {
+        gameContainer.addEventListener(event, function(e) {
+            //gets the position of the container relative to the viewport.
+            const gameContainerPos = gameContainer.getBoundingClientRect();
+            //mouse coords relative to the container = mouse absolute coordinates - containers relative position.
+            const mouseX = e.clientX - gameContainerPos.left;
+            //updates the cup's position.
+            let halfCupWidth = (cupWidth * 0.01 * dynamicGameArea.width) / 2
+            let halfBobaWidth = dynamicGameArea.width * settings.game.bobaWidth * .01  / 2
+            let halfCrawlerWidth = dynamicGameArea.width * settings.game.crawlerWidth * .01  / 2
+            //console.log(halfBobaWidth)
+            //console.log(halfCupWidth)
 
-        cup.style.left = (mouseX - halfCupWidth)+ 'px';
-        cup.leftBound = (mouseX - halfCupWidth*1.2)/dynamicGameArea.width * 100
-        cup.rightBound = (mouseX + halfCupWidth*1.2)/dynamicGameArea.width * 100 // percents
-        // cup.leftBoundCrawler = (mouseX - halfCupWidth - halfCrawlerWidth)/dynamicGameArea.width * 100
-        // cup.rightBoundCrawler = (mouseX + halfCupWidth - halfCrawlerWidth)/dynamicGameArea.width * 100
+            cup.style.left = (mouseX - halfCupWidth)+ 'px';
+            cup.leftBound = (mouseX - halfCupWidth*1.2)/dynamicGameArea.width * 100
+            cup.rightBound = (mouseX + halfCupWidth*1.2)/dynamicGameArea.width * 100 // percents
+            // cup.leftBoundCrawler = (mouseX - halfCupWidth - halfCrawlerWidth)/dynamicGameArea.width * 100
+            // cup.rightBoundCrawler = (mouseX + halfCupWidth - halfCrawlerWidth)/dynamicGameArea.width * 100
 
-        //sets static position of cup to stop it from moving past the right side of the container.
-        if (mouseX >= dynamicGameArea.width * 0.9 + halfCupWidth) {
-            cup.style.left = (dynamicGameArea.width * 0.9)+ 'px'
-        }
-        if (mouseX <= halfCupWidth){
-            cup.style.left = 0 + "px"
-        }
-    });
+            //sets static position of cup to stop it from moving past the right side of the container.
+            if (mouseX >= dynamicGameArea.width * 0.9 + halfCupWidth) {
+                cup.style.left = (dynamicGameArea.width * 0.9)+ 'px'
+            }
+            if (mouseX <= halfCupWidth){
+                cup.style.left = 0 + "px"
+            }
+        });
+    }
 }
 
 // function m
