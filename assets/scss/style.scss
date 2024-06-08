@@ -1,0 +1,65 @@
+@use 'splash';
+@use 'howToPlay';
+@use 'gameOver';
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 0px;
+    background: rgb(234, 255, 255);
+    user-select: none;
+}
+
+#game-container {
+    background-size: 100% 100%;
+    margin: auto;
+    position: relative;
+    box-shadow: 2px 10px 10px grey;
+}
+
+#header {
+    height: 40px;
+    position: fixed;
+}
+
+.gameHeaderStyle {
+    text-shadow: 2px 2px 1px pink;
+    color: rgb(128, 0, 85);
+}
+
+#game-paused {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+.gameHeaderHeader{
+    color:red;
+}
+
+.gameHeaderSubHeader{
+    color:rgb(128, 0, 85);
+}
+
+.comicSans30bold{
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+h2.comicSans30bold {
+   font-size: 1.7em; 
+}
+
+h3.comicSans30bold {
+     color: rgb(100, 0, 67);
+     margin-top: 12%;
+ }
+
+#window-size-warning{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%
+}
