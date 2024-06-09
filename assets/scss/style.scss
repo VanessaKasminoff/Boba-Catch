@@ -1,51 +1,20 @@
-@use 'splash';
-@use 'howToPlay';
-@use 'gameOver';
+@use 'partials/splash';
+@use 'partials/howToPlay';
+@use 'partials/gameOver';
+@use 'partials/game';
+@use 'partials/config';
+@use 'partials/variables';
 
 body {
     margin: 0;
     padding: 0;
     height: 0px;
-    background: rgb(234, 255, 255);
+    background: variables.$bg-color;
     user-select: none;
 }
 
-#game-container {
-    background-size: 100% 100%;
-    margin: auto;
-    position: relative;
-    box-shadow: 2px 10px 10px grey;
-}
-
-#header {
-    height: 40px;
-    position: fixed;
-}
-
-.gameHeaderStyle {
-    text-shadow: 2px 2px 1px pink;
-    color: rgb(128, 0, 85);
-}
-
-#game-paused {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    translate: -50% -50%;
-}
-
-.gameHeaderHeader{
-    color:red;
-}
-
-.gameHeaderSubHeader{
-    color:rgb(128, 0, 85);
-}
-
 .comicSans30bold{
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 1rem;
-    font-weight: bold;
+    @include config.comic-sans;
 }
 
 h2.comicSans30bold {
@@ -53,7 +22,7 @@ h2.comicSans30bold {
 }
 
 h3.comicSans30bold {
-     color: rgb(100, 0, 67);
+     color: variables.$hover-bg-color;
      margin-top: 12%;
  }
 
