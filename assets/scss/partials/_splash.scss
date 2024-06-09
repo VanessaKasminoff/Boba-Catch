@@ -1,0 +1,64 @@
+@use 'variables';
+
+#splash {
+    height: fit-content;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    translate: -50% -40%;
+    text-align: center;
+
+    #game-title {
+        font-size: 4.5em;
+        width: min-content;
+    }
+    
+    #play-game-button {
+        background: variables.$primary-color;
+        border-radius: 20%;
+        width: min-content;
+        color: variables.$secondary-color;
+        margin: auto;
+        font-size: 2em;
+        padding: 0% 8% 5%;
+        position: absolute;
+        bottom: -30%;
+        left: 50%;
+        translate: -50% 0%;
+
+            &:hover {
+                background: variables.$hover-bg-color;
+                color: variables.$hover-txt-color;
+            }
+            &:active {
+                position: absolute;
+                bottom: -31%;
+                left: 51%;
+                translate: -50% 0%; 
+            }
+    }
+    
+    #how-to-play-button {
+        background: variables.$primary-color;
+        border-radius: 20%;
+        width: 60%;
+        color: variables.$secondary-color;
+        margin: auto;
+        padding: 0% 8% 5%;
+        position: absolute;
+        bottom: -10%;
+        left: 50%;
+        translate: -50% 0%;
+
+            &:hover {
+                background: variables.$hover-bg-color;
+                color: variables.$hover-txt-color;
+            }
+            &:active {
+                position: absolute;
+                bottom: -11%;
+                left: 51%;
+                translate: -50% 0%;
+            }
+    }
+}

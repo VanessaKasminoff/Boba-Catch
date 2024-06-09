@@ -1,0 +1,34 @@
+@use 'partials/splash';
+@use 'partials/howToPlay';
+@use 'partials/gameOver';
+@use 'partials/game';
+@use 'partials/config';
+@use 'partials/variables';
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 0px;
+    background: variables.$bg-color;
+    user-select: none;
+}
+
+.comicSans30bold{
+    @include config.comic-sans;
+}
+
+h2.comicSans30bold {
+   font-size: 1.7em; 
+}
+
+h3.comicSans30bold {
+     color: variables.$hover-bg-color;
+     margin-top: 12%;
+ }
+
+#window-size-warning{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%
+}
