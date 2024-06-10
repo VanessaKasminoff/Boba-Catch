@@ -32,6 +32,7 @@ export function loadSplash(gameContainer) {
     }, false)
 
     document.getElementById("play-game-button").addEventListener("click", () => {
+        console.log('Play button clicked!')
         gameContainer.innerHTML = ""
         loadGame(gameContainer)
     } , false)     

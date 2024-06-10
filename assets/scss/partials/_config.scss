@@ -1,5 +1,22 @@
+@use 'variables';
+
 @mixin comic-sans {
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: variables.$comic-font;
     font-size: 1rem;
     font-weight: bold;
+}
+
+@mixin button-hover-style {
+    background: variables.$hover-bg-color;
+    color: variables.$hover-txt-color;
+}
+
+@mixin active-btn-position ($btn) {
+    @if $btn == "playAgain" {
+        bottom: -21%;
+    } @else if $btn == "playGame" {
+        bottom: -31%;
+    } @else {
+        bottom: -11%;
+    }
 }

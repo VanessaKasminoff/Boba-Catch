@@ -8,7 +8,7 @@
 body {
     margin: 0;
     padding: 0;
-    height: 0px;
+    height: 0;
     background: variables.$bg-color;
     user-select: none;
 }
@@ -18,7 +18,7 @@ body {
 }
 
 h2.comicSans30bold {
-   font-size: 1.7em; 
+   font-size: variables.$font-size-med; 
 }
 
 h3.comicSans30bold {
