@@ -1,0 +1,9 @@
+@function px-rem($size, $base: 16px) {
+    @if (unitless($size)) {
+        $size: $size * 1px;
+    }
+    @if (unitless($base)) {
+        $base: $base * 1px;
+    }
+    @return 1rem * ($size/$base);
+}

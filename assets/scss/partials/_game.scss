@@ -1,18 +1,19 @@
 @use 'variables';
+@use 'functions';
 
 #game-container {
     background-size: 100% 100%;
     margin: auto;
     position: relative;
-    box-shadow: 2px 10px 10px grey;
+    box-shadow: functions.px-rem(2px) functions.px-rem(10px) functions.px-rem(10px) grey;
 
     #header {
-        height: 40px;
+        height: functions.px-rem(40px);
         position: fixed;
     }
     
     .gameHeaderStyle {
-        text-shadow: 2px 2px 1px variables.$secondary-color;
+        text-shadow: functions.px-rem(2px) functions.px-rem(2px) functions.px-rem(1px) variables.$secondary-color;
         color: variables.$primary-color;
     }
     
