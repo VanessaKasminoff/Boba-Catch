@@ -1,4 +1,4 @@
-import settings from '../data/settings.json' assert { type: 'json' };
+import settings from '../../assets/data/settings.json' with { type: 'json' };
 import { loadGameOver } from './loadGameOver.js';
 let cupWidth = settings.game.cupWidth
 let dynamicGameArea // if this value was returned in resizeGameArea, then it would only be returned for the instance it was invoked. This is problematic because we need this value to be changed on each resize.

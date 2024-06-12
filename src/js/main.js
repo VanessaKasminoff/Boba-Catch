@@ -10,4 +10,3 @@ const gameContainer = document.getElementById('game-container'); //initializes f
 
 loadSplash(gameContainer)
 // loadGame(gameContainer)
-

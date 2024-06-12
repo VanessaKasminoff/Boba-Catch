@@ -1,4 +1,4 @@
-import settings from '../data/settings.json' assert { type: 'json' };
+import settings from '/assets/data/settings.json' with { type: 'json' };
 import { resizeGameArea } from './loadGame.js';
 let heightValue = settings.windowSize.heightValue
 let widthValue = settings.windowSize.widthValue
